@@ -1,0 +1,56 @@
+
+    <nav style="margin-left:550px">
+      <ul class="pagination">
+
+          {% if current_page.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ current_page.previous_page_number }}&query={{ query }}">Пред</a>
+                </li>
+          {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="">Пред</a>
+                </li>
+          {% endif %}
+          {% if current_page.number|add:'-3' > 0%}
+                <li class="page-item"><a class="page-link pagination-body text-center" href="?page=1&query={{ query }}">1</a></li>
+                <li class=""><p class="page-link page-link-none" href="#">...</p></li>
+          {% endif %}
+          {% if current_page.number|add:'-2' > 0 %}
+                <li class="page-item" aria-current="page">
+                    <a class="page-link" href="?page={{ current_page.number|add:'-2' }}&query={{ query }}">{{ current_page.number|add:'-2' }}</a>
+                </li>
+          {% endif %}
+          {% if current_page.number|add:'-1' > 0 %}
+                <li class="page-item" aria-current="page">
+                    <a class="page-link" href="?page={{ current_page.number|add:'-1' }}&query={{ query }}">{{ current_page.number|add:'-1' }}</a>
+                </li>
+          {% endif %}
+          <li class="page-item active" aria-current="page">
+              <a class="page-link" href="?page={{ page }}&query={{ query }}">{{ current_page.number }}</a>
+          </li>
+          {% if current_page.number|add:'1' <= paginator.num_pages %}
+               <li class="page-item" aria-current="page">
+                    <a class="page-link" href="?page={{ current_page.number|add:'1' }}&query={{ query }}">{{ current_page.number|add:'1' }}</a>
+                </li>
+          {% endif %}
+          {% if current_page.number|add:'2' <= paginator.num_pages %}
+                <li class="page-item" aria-current="page">
+                    <a class="page-link" href="?page={{ current_page.number|add:'2' }}&query={{ query }}">{{ current_page.number|add:'2' }}</a>
+                </li>
+          {% endif %}
+          {% if current_page.number|add:'3' <= paginator.num_pages %}
+                <li class=""><p class="page-link page-link-none" href="#">...</p></li>
+                <li class="page-item"><a class="page-link pagination-body text-center" href="?page={{ paginator.num_pages }}&query={{ query }}">{{ paginator.num_pages }}</a></li>
+          {% endif %}
+
+          {% if current_page.has_next %}
+                <li class="page-item">
+                    <a class='page-link' href="?page={{ current_page.next_page_number }}&query={{ query }}">След</a>
+                </li>
+          {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="">След</a>
+                </li>
+          {% endif %}
+      </ul>
+    </nav>

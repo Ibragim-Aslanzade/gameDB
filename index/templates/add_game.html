@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Добавить игру {% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<form class="bg-light" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Название</label>
+    <input type="text" name='name' class="form-control">
+  </div>
+   <div class="mb-3">
+    <label class="form-label">Год выхода</label>
+    <input type="number" name='year' class="form-control">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Описание</label>
+    <input type="text" name='description' class="form-control">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Студия</label>
+    <input type="text" name='studio' class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Рейтинг</label>
+    <input type="number" name='rating' class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Рубрика</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="category">
+      <option>Аркада</option>
+      <option>Шутер</option>
+      <option>Файтинг</option>
+      <option>Стратегия</option>
+      <option>Приключение</option>
+      <option>Головоломка</option>
+    </select>
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Постер</label>
+    <input type="file" name="poster" class="form-control" multiple accept="image/jpeg,image/png">
+  </div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+{% endblock %}
+</body>
+</html>

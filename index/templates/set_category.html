@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {{ current_category.name }} {% endblock %}</title>
+</head>
+<body>
+    {% block search %}
+    <form class="d-flex" role="search" action="{% url 'set_category' current_category.id %}" method="get">
+      <input class="form-control me-2" name="query" type="search" placeholder="Поиск" aria-label="Поиск">
+      <button class="btn btn-outline-light" type="submit">Поиск</button>
+      </form>
+    {% endblock %}
+    {% block content %}
+        <div class="games" style="margin-left: 40px;">
+        {% for game in games %}
+        <div class="card" style="width: 200px; height: auto; margin: 20px 0 20px 70px; display:inline-block;">
+            <img src="{{ game.poster.url }}" class="card-img-top" style="height: 220px" alt="...">
+                <div class="card-body" >
+                    <h5 class="card-title">{{ game.name }}</h5>
+                    <p class="card-text">Год выхода: {{ game.year }}<br>Разработчик: {{ game.studio }}<br>Категория: {{ game.rubric }}<br>Рейтинг: {{ game.rating }}</p>
+                    <a href="{% url 'detail_page' game.pk %}" class="btn btn-primary">Перейти</a>
+                </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% include "paginator.html" %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Регистрация{% endblock %}</title>
+
+</head>
+<body>
+    {% block content %}
+    {% if user.is_authenticated %}
+    <div class="alert alert-primary" role="alert">
+        Вы уже вошли в аккаунт
+    </div>
+    {% else %}
+    <form class="bg-light" method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+  <div class="mb-3">
+          {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li class="alert alert-danger" style="list-style-type: none; margin-left: -40px">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+    <label class="form-label">Имя пользователя</label>
+    <input name='username' type="text" class="form-control"aria-describedby="emailHelp" minlength="6" required>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+    <input name = 'email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+    <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Пароль</label>
+    <input name='password' type="password" class="form-control password" id="exampleInputPassword1" minlength="8" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+
+    {% endif %}
+    {% endblock %}
+
+</body>
+</html>

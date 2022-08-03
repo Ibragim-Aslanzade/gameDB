@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Профиль {% endblock %}</title>
+</head>
+<body>
+{% block content %}
+
+<div class="card mb-3" style="width: 1200px; margin: 20px 0 0 20px">
+    <div class="row g-0">
+        <div class="col-md-4">
+
+            <img src="{{ profile.avatar.url }}" class="img-fluid rounded-start" alt="...">
+
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                {% if profile.name %}
+                    <h5 class="card-title" style="font-size: 35px">{{ profile.name }} ({{ profile.user.username }})</h5>
+                {% else %}
+                    <h5 class="card-title" style="font-size: 35px">Имя не установлено ({{ profile.user.username }})</h5>
+                {% endif %}
+                {% if profile.user == user %}
+                <a href="{% url 'user_games' profile.user.id %}"><button type="button" class="btn btn-primary" style="margin: -82px 0 0 667px">Мои игры</button></a>
+                <a href="{% url 'edit_profile' %}"><button type="button" class="btn btn-primary" style="margin: -130px 0 0 450px">Редактировать профиль</button></a>
+                {% else %}
+                <a href="{% url 'user_games' profile.user.id %}"><button type="button" class="btn btn-primary" style="margin: -82px 0 0 550px ">Игры пользователя</button></a>
+                {% endif %}
+                <div class="info" style="margin-top: -40px">
+                {% if profile.birth_date %}
+                    <p>Дата рождения: {{ profile.birth_date }}</p>
+                {% else %}
+                    <p>Дата рождения: Не установлено</p>
+                {% endif %}
+                {% if profile.location %}
+                    <p>Страна: {{ profile.location }}</p>
+                {% else %}
+                    <p>Страна: Не установлено</p>
+                {% endif %}
+                {% if profile.bio %}
+                    <p class="card-text">Информация: <br> {{ profile.bio }}</p>
+                {% else %}
+                    <p class="card-text">Информация: <br> Не установлено</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

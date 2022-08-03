@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {{ game.name }} {% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card mb-3" style="width: 1200px; margin: 20px 0 0 20px">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ game.poster.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ game.name }}</h5>
+          <p class="card-text">{{ game.description|linebreaks }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+    {% endblock %}
+</body>
+</html>

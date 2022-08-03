@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends 'basic.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Редактировать профиль {% endblock %}</title>
+</head>
+<body>
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success" >{{ message }} Вы можете пройти в профиль по <a href="{% url 'profile' user.id %}">этой</a> ссылке</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<form class="bg-light" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Имя и фамилия</label>
+    <input type="text" name='name' class="form-control">
+  </div>
+   <div class="mb-3">
+    <label class="form-label">Дата рождения</label>
+    <input type="date" name='birth' class="form-control">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Страна</label>
+    <input type="text" name='location' class="form-control">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">О себе</label>
+    <input type="text" name='bio' class="form-control">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Аватар</label>
+    <input type="file" name="avatar" class="form-control" multiple accept="image/jpeg,image/png">
+  </div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+{% endblock %}
+</body>
+</html>
