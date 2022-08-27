@@ -16,24 +16,17 @@
     <form class="bg-light" method="post" action="{% url 'register' %}">
     {% csrf_token %}
   <div class="mb-3">
-          {% if messages %}
-            <ul class="messages">
-            {% for message in messages %}
-                <li class="alert alert-danger" style="list-style-type: none; margin-left: -40px">{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
     <label class="form-label">Имя пользователя</label>
-    <input name='username' type="text" class="form-control"aria-describedby="emailHelp" minlength="6" required>
+    {{ form.username }}
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
-    <input name = 'email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+    {{ form.email }}
     <div id="emailHelp" class="form-text">Мы никогда никому не передадим вашу электронную почту.</div>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Пароль</label>
-    <input name='password' type="password" class="form-control password" id="exampleInputPassword1" minlength="8" required>
+    {{ form.password }}
   </div>
   <button type="submit" class="btn btn-primary">Отправить</button>
 </form>

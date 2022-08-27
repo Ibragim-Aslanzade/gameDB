@@ -15,7 +15,7 @@ from .models import Game, Rubric, Profile
 from .serializer import Game_serializer
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from .forms import GameForm
+from .forms import GameForm, UserForm
 
 
 def index(request):
@@ -82,10 +82,11 @@ def detail_page(request, game_id):
 
 def login(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
 
-        user = authenticate(username=username, password=password)
+        username = User.objects.get(email=email)
+        user = authenticate(username=email, password=password)
 
         if user and user.is_active:
             auth_login(request, user)
@@ -96,31 +97,15 @@ def login(request):
 
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
 
-        if User.objects.filter(email=email).exists():
-            messages.add_message(request, messages.ERROR, 'Данный email занят, попробуйте другой')
-
-        if User.objects.filter(username=username).exists():
-            messages.add_message(request, messages.ERROR, 'Данный юзернейм занят, попробуйте другой')
-
-        if User.objects.filter(email=email).exists() == False & User.objects.filter(
-                username=username).exists() == False:
-            User.objects.create_user(
-                username=username,
-                email=email,
-                password=password)
-
-            user = authenticate(username=username, password=password)
-            if user and user.is_active:
-                auth_login(request, user)
-
-            return redirect('index')
-
-    return render(request, 'registration/register.html')
+            return redirect('login')
+    else:
+        user_form = UserForm()
+    return render(request, 'registration/register.html', {'form': user_form})
 
 
 def logout(request):
@@ -218,16 +203,12 @@ def user_games(request, user_id):
 def add_game(request):
     categories = Rubric.objects.all()
     if request.method == "POST":
-        rubric_name = request.POST.get('category')
-        rubric = Rubric.objects.get(name=rubric_name)
-
         form = GameForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.rubric = rubric
             post.author = request.user
             post.save()
-            return redirect('detail_page', game_id = post.id)
+            return redirect('detail_page', game_id=post.id)
     else:
         form = GameForm()
     return render(request, 'add_game.html', {'form': form, 'categories': categories})

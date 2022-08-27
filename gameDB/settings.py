@@ -135,7 +135,7 @@ MEDIA_URL = '/index/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['http://localhost:8000', '192.168.0.233']
+ALLOWED_HOSTS = ['localhost', '192.168.0.233', '127.0.0.1']
 
 cloudinary.config(
   cloud_name = "dv4itrypy",
