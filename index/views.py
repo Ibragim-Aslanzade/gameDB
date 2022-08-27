@@ -13,6 +13,9 @@ from rest_framework.views import APIView
 from django.http import HttpResponseRedirect
 from .models import Game, Rubric, Profile
 from .serializer import Game_serializer
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from .forms import GameForm
 
 
 def index(request):
@@ -211,21 +214,21 @@ def user_games(request, user_id):
 
     return render(request, 'user_games.html', context)
 
+@login_required(login_url='login')
 def add_game(request):
     categories = Rubric.objects.all()
+    if request.method == "POST":
+        rubric_name = request.POST.get('category')
+        rubric = Rubric.objects.get(name=rubric_name)
 
-    name = request.POST.get('name')
-    year = request.POST.get('year')
-    studio = request.POST.get('studio')
-    poster = request.FILES.get('poster')
-    description = request.POST.get('description')
-    rating = request.POST.get('rating')
-    category = request.POST.get('category')
-
-    if name != None and year != None and studio != None and poster != None and description != None and rating != None:
-        category_db = Rubric.objects.get(name=category)
-        game = Game.objects.create(name=name, year=year, description=description, studio=studio, rating=rating, poster=poster, rubric=category_db, author=request.user)
-
-        return HttpResponseRedirect(reverse('detail_page', kwargs={'game_id': game.id}))
+        form = GameForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.rubric = rubric
+            post.author = request.user
+            post.save()
+            return redirect('detail_page', game_id = post.id)
     else:
-        return render(request, 'add_game.html', {'categories': categories})
+        form = GameForm()
+    return render(request, 'add_game.html', {'form': form, 'categories': categories})
+

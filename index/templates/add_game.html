@@ -12,27 +12,27 @@
     {% csrf_token %}
   <div class="mb-3">
     <label class="form-label">Название</label>
-    <input type="text" name='name' class="form-control">
+    {{ form.name }}
   </div>
    <div class="mb-3">
     <label class="form-label">Год выхода</label>
-    <input type="number" name='year' class="form-control">
+    {{ form.year }}
   </div>
     <div class="mb-3">
     <label class="form-label">Описание</label>
-    <input type="text" name='description' class="form-control">
+    {{ form.description }}
   </div>
     <div class="mb-3">
     <label class="form-label">Студия</label>
-    <input type="text" name='studio' class="form-control">
+    {{ form.studio }}
   </div>
   <div class="mb-3">
     <label class="form-label">Рейтинг</label>
-    <input type="number" name='rating' class="form-control">
+    {{ form.rating }}
   </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Рубрика</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="category">
+    <select class="form-control" name="category" required>
       <option>Аркада</option>
       <option>Шутер</option>
       <option>Файтинг</option>
@@ -43,7 +43,7 @@
   </div>
     <div class="mb-3">
     <label class="form-label">Постер</label>
-    <input type="file" name="poster" class="form-control" multiple accept="image/jpeg,image/png">
+    {{ form.poster }}
   </div>
   <button type="submit" class="btn btn-primary">Отправить</button>
 </form>

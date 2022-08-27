@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+from ssl import AlertDescription
 import cloudinary
 import os
 from pathlib import Path
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-j6qf@94!m(=j_g%dw$)1$84lx9gx2w6&$h_a&rynj0err^c(8_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -134,6 +135,7 @@ MEDIA_URL = '/index/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['http://localhost:8000', '192.168.0.233']
 
 cloudinary.config(
   cloud_name = "dv4itrypy",
@@ -141,9 +143,3 @@ cloudinary.config(
   api_secret = "SHltQ5CixjuQ30t8XSlBp7Xco8g"
 )
 
-#Для того чтобы пост можно было отправлять без csrf
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ]
-}
